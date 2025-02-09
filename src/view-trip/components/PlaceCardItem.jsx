@@ -29,7 +29,7 @@ function PlaceCardItem({place}) {
       );
       const autoData = await autoResponse.json();
   
-      const placeId = autoData?.predictions?.[0]?.place_id;
+      const placeId = autoData?.predictions?.[2]?.place_id;
       // if (!placeId) return;
   
       // Step 2: Get Photo Reference from Place Details
