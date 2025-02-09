@@ -15,7 +15,7 @@ function PlacesToVisit({ trip }) {
           <div className='grid sm:grid-cols-1 md:grid-cols-2 gap-2'>
             {item.plan.map((place, index) => (
               <div key={index}>
-                <h2 className='font-medium text-sm text-orange-500'>Best Time to Visit : {place?.best_time} ({place?.time})</h2>
+                <h2 className='font-medium text-sm text-orange-500'>Best Time to Visit : {place?.best_time_to_visit} ({place?.time})</h2>
                 <PlaceCardItem  
                   place={place}
                 />
