@@ -8,7 +8,7 @@ function FoodCardItem({food, tripId, index}) {
   
     useEffect(() => {
       if (food?.name) {
-        fetchPhotoFromFirebase(food?.name, tripId);
+        // fetchPhotoFromFirebase(food?.name, tripId);
       }
     }, [food]);
   
@@ -39,12 +39,12 @@ function FoodCardItem({food, tripId, index}) {
       );
       const autoData = await autoResponse.json();
   
-      const placeId = autoData?.predictions?.[0]?.place_id;
+      const placeId = autoData?.predictions?.[1]?.place_id;
     //   if (!placeId) return;
   
       // Step 2: Get Photo Reference from Place Details
       const detailsResponse = await fetch(
-        `https://maps.gomaps.pro/maps/api/place/details/json?place_id=${placeId}&key=${import.meta.env.VITE_GOMAPS_API_KEY}`
+        `https://maps.gomaps.pro/maps/api/place/details/json?place_id=${placeId}&key=${import.meta.env.VITE_GOMAPS_PLACE_API_KEY}`
       );
       const detailsData = await detailsResponse.json();
       // console.log(detailsData)

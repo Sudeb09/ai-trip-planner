@@ -52,7 +52,7 @@ function InfoSection({trip}) {
     const detailsData = await detailsResponse.json();
     // console.log(detailsData?.result?.photos)
 
-    const photoReference = detailsData?.result?.photos?.[8]?.photo_reference;
+    const photoReference = detailsData?.result?.photos?.[6]?.photo_reference;
     // // console.log(`Photo reference: ${photoReference}`)
     if (!photoReference) return;
 

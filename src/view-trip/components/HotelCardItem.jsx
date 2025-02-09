@@ -9,7 +9,7 @@ function HotelCardItem({hotel, tripId, index}) {
 
   useEffect(() => {
     if (hotel?.name) {
-      fetchPhotoFromFirebase(hotel?.name, tripId);
+      // fetchPhotoFromFirebase(hotel?.name, tripId);
     }
   }, [hotel]);
 
@@ -45,12 +45,12 @@ function HotelCardItem({hotel, tripId, index}) {
 
     // Step 2: Get Photo Reference from Place Details
     const detailsResponse = await fetch(
-      `https://maps.gomaps.pro/maps/api/place/details/json?place_id=${placeId}&key=${import.meta.env.VITE_GOMAPS_API_KEY}`
+      `https://maps.gomaps.pro/maps/api/place/details/json?place_id=${placeId}&key=${import.meta.env.VITE_GOMAPS_PLACE_API_KEY}`
     );
     const detailsData = await detailsResponse.json();
     // console.log(detailsData)
 
-    const photoReference = detailsData?.result?.photos?.[8]?.photo_reference;
+    const photoReference = detailsData?.result?.photos?.[7]?.photo_reference;
     // // console.log(`Photo reference: ${photoReference}`)
 
     // Step 3: Generate Photo URL

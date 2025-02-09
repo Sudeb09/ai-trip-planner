@@ -24,8 +24,9 @@ function MyTrips() {
         // setUserTrips([]);
         const q = query(collection(db, 'AITrips'), where('userEmail', '==', user?.email));
         const querySnapshot = await getDocs(q);
-        
+        console.log(querySnapshot)
         const trips = querySnapshot.docs.map(doc => doc.data());
+        console.log(trips)
         setUserTrips(trips);
     }
 
