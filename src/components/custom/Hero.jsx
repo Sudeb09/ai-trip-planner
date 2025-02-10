@@ -1,20 +1,25 @@
-import React from 'react'
-import { Button } from '../ui/button'
-import { Link } from 'react-router-dom'
+import React from 'react';
+import { Button } from '../ui/button';
+import { Link } from 'react-router-dom';
 
 function Hero() {
   return (
-    <div className='flex flex-col items-center mx-56 gap-9'>
-        <h2 
-            className='font-extrabold text-[50px] text-center mt-16'
-        ><span className='text-[#f56551]'>Discover Your Next Adevnture with AI </span><br /> Personalized Itineraries at Yor Fingertips
-        </h2>
+    <div className='flex flex-col items-center px-6 md:px-20 lg:mx-56 gap-6 md:gap-9 text-center'>
+      <h2 className='font-extrabold text-3xl md:text-5xl mt-12 md:mt-16'>
+        <span className='text-[#f56551]'>Discover Your Next Adventure with AI </span>
+        <br className='hidden md:block' />
+        Personalized Itineraries at Your Fingertips
+      </h2>
 
-        <p className='text-xl text-gray-500 text-center'>Your personal trip planner and travel adviser, creating custom itineraries tailored to your interests and budget</p>
+      <p className='text-base md:text-xl text-gray-500'>
+        Your personal trip planner and travel adviser, creating custom itineraries tailored to your interests and budget
+      </p>
 
-        <Link to={'/create-trip'}><Button>Get Started</Button></Link>
+      <Link to={'/create-trip'}>
+        <Button className='px-6 py-3 text-lg md:text-xl'>Get Started</Button>
+      </Link>
     </div>
-  )
+  );
 }
 
-export default Hero
+export default Hero;

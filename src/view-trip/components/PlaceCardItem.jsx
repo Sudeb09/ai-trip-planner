@@ -53,16 +53,22 @@ function PlaceCardItem({place}) {
 
   return (
     <Link to={'https://www.google.com/maps/search/?api=1&query='+place?.placeName} target='_blank'>
-        <div className='border rounded-xl p-3 my-2 flex gap-5 hover:scale-105 transition-all hover:shadow-sm cursor-pointer'>
-            <img src={photoUrl? photoUrl : "/placeholder.jpg"} alt="" className='w-[130px] h-[130px] rounded-xl' />
-            <div>
-                <h2 className='font-bold text-lg text-neutral-700'>{place?.placeName} ({place?.placeActivity})</h2>
-                <p className='text-xs text-gray-400'>{place?.description}</p>
-                <h2 className='text-xs mt-2 text-neutral-700'>🕙 {place?.travelTime}</h2>
-                <h2 className='text-xs mt-2 text-neutral-700'>🎫 {place?.tricketPricing}</h2>
-            </div>
+    <div className='border rounded-xl p-3 my-4 hover:scale-105 transition-all hover:shadow-sm cursor-pointer min-h-[300px]'>
+        <div className='w-full'>
+            <img src={photoUrl ? photoUrl : "/placeholder.jpg"} alt="" className='w-full h-[180px] object-cover rounded-xl' />
         </div>
-    </Link>
+        <div className='flex flex-col gap-2 mt-2 sm:mt-0'>
+            <h2 className='font-bold text-base sm:text-lg text-neutral-700'>{place?.placeName} ({place?.placeActivity})</h2>
+            <p className='text-xs sm:text-sm text-gray-400'>{place?.description}</p>
+            <h2 className='text-xs sm:text-sm text-neutral-700'>🕙 {place?.travelTime}</h2>
+            <h2 className='text-xs sm:text-sm text-neutral-700'>🎫 {place?.tricketPricing}</h2>
+        </div>
+    </div>
+</Link>
+
+
+
+
   )
 }
 

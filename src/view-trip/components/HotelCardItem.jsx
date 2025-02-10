@@ -85,17 +85,17 @@ function HotelCardItem({hotel, tripId, index}) {
 
   return (
     <Link to={'https://www.google.com/maps/search/?api=1&query='+hotel?.hotelName+','+hotel?.hotelAddress} target='_blank'>
-        <div className='mt-5 hover:scale-105 transition-all cursor-pointer'>
-            <img src={photoUrl? photoUrl : "/placeholder.jpg"} alt="" className='h-[180px] w-full object-cover rounded-xl'/>
-            <div className='my-2 flex flex-col gap-2'>
-                <h2 className='font-bold text-neutral-700'>{hotel?.name}</h2>
-                <h2 className='text-xs text-neutral-700'>{hotel?.description}</h2>
-                <h2 className='text-xs text-gray-500'>📌 {hotel?.address}</h2>
-                <h2 className='text-sm text-neutral-700'>💰 {hotel?.price}</h2>
-                <h2 className='text-sm text-neutral-700'>⭐ {hotel?.rating}</h2>
-            </div>
-        </div>
-    </Link>
+      <div className='mt-5 hover:scale-105 transition-all cursor-pointer'>
+          <img src={photoUrl ? photoUrl : "/placeholder.jpg"} alt="" className='h-[180px] w-full object-cover rounded-xl'/>
+          <div className='my-2 flex flex-col gap-2'>
+              <h2 className='font-bold text-neutral-700 text-base sm:text-lg'>{hotel?.name}</h2>
+              <h2 className='text-xs text-neutral-700 sm:text-sm'>{hotel?.description}</h2>
+              <h2 className='text-xs text-gray-500 sm:text-sm'>📌 {hotel?.address}</h2>
+              <h2 className='text-sm text-neutral-700 sm:text-base'>💰 {hotel?.price}</h2>
+              <h2 className='text-sm text-neutral-700 sm:text-base'>⭐ {hotel?.rating}</h2>
+          </div>
+      </div>
+  </Link>
   )
 }
 

@@ -31,22 +31,28 @@ function MyTrips() {
     }
 
   return (
-    <div className='sm:px-10 md:px-32 lg:px-56 xl:px-72 px-5 mt-10 flex flex-col min-h-[85vh]' >
-        <h2 className='font-bold text-3xl'>My Trips</h2>
-        <div className='grid grid-cols-2 md:grid-cols-3 mt-10 gap-3'>
-            {userTrips?.length>0? userTrips.map((trip, index)=>(
-                <UserTripCardItem trip={trip} key={index}/>
-            ))
-            :[1,2,3,4,5,6].map((item,index)=>(
-                <div key={index} className='h-[250px] w-full bg-slate-200 animate-pulse rounded-xl'></div>
-            ))                
-            }
+    <div className='px-4 sm:px-10 md:px-32 lg:px-56 xl:px-72 mt-10 flex flex-col min-h-[85vh]'>
+        <h2 className='font-bold text-2xl sm:text-3xl'>My Trips</h2>
+
+        {/* Trip Cards Grid */}
+        <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 mt-6 gap-4'>
+            {userTrips?.length > 0 ? (
+                userTrips.map((trip, index) => (
+                    <UserTripCardItem trip={trip} key={index} />
+                ))
+            ) : (
+                [1, 2, 3, 4, 5, 6].map((item, index) => (
+                    <div key={index} className='h-[200px] sm:h-[250px] w-full bg-slate-200 animate-pulse rounded-xl'></div>
+                ))
+            )}
         </div>
 
-        <div className='mt-auto '>
-         <Footer />
+        {/* Footer at the Bottom */}
+        <div className='mt-10 sm:mt-auto'>
+            <Footer />
         </div>
     </div>
+
   )
 }
 
