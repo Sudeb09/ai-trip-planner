@@ -60,7 +60,7 @@ function PlaceCardItem({place}) {
         <div className='flex flex-col gap-2 mt-2 sm:mt-0'>
             <h2 className='font-bold text-base sm:text-lg text-neutral-700'>{place?.placeName} ({place?.placeActivity})</h2>
             <p className='text-xs sm:text-sm text-gray-400'>{place?.description}</p>
-            <h2 className='text-xs sm:text-sm text-neutral-700'>🕙 {place?.travelTime}</h2>
+            <h2 className='text-xs sm:text-sm text-neutral-700'>🕙 {place?.travelTime_from_the_previous_location}</h2>
             <h2 className='text-xs sm:text-sm text-neutral-700'>🎫 {place?.tricketPricing}</h2>
         </div>
     </div>
