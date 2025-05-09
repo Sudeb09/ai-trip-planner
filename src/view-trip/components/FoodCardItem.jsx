@@ -8,7 +8,7 @@ function FoodCardItem({food, tripId, index}) {
   
     useEffect(() => {
       if (food?.name) {
-        // fetchPhotoFromFirebase(food?.name, tripId);
+        fetchPhotoFromFirebase(food?.name, tripId);
       }
     }, [food]);
   
