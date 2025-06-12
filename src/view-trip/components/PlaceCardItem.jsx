@@ -11,7 +11,7 @@ function PlaceCardItem({place}) {
 
     useEffect(() => {
       if (place?.placeName) {
-        fetchPhotoFromFirebase(place?.placeName);
+        // fetchPhotoFromFirebase(place?.placeName);
       }
     }, [place]);
   

@@ -9,7 +9,7 @@ function HotelCardItem({hotel, tripId, index}) {
 
   useEffect(() => {
     if (hotel?.name) {
-      fetchPhotoFromFirebase(hotel?.name, tripId);
+      // fetchPhotoFromFirebase(hotel?.name, tripId);
     }
   }, [hotel]);
 
