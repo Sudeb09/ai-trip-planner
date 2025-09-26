@@ -16,52 +16,57 @@ function InfoSection({trip}) {
   }, [trip]);
 
   // Step 1: Fetch Photo from Firebase Firestore
-  const fetchPhotoFromFirebase = async (placeName, tripId) => {
-    const placeRef = doc(db, 'AITrips', tripId);
-    const placeSnap = await getDoc(placeRef);
-    // console.log(placeSnap)
-    // console.log(placeSnap.data())
-    if (placeSnap.exists()) {
-      const data = placeSnap.data();
-      // console.log(data)
-      if (data.tripPhotoURL) {
-        // console.log(data.tripPhotoURL)
-        setPhotoUrl(data.tripPhotoURL);
-        return;
-      }
+const fetchPhotoFromFirebase = async (placeName, tripId) => {
+  const placeRef = doc(db, 'AITrips', tripId);
+  const placeSnap = await getDoc(placeRef);
+
+  if (placeSnap.exists()) {
+    const data = placeSnap.data();
+    if (data.tripPhotoURL) {
+      setPhotoUrl(data.tripPhotoURL);
+      return;
     }
+  }
 
-    // If no photo exists, fetch from Google Maps and update Firebase
-    GetPlacePhoto(placeName, tripId);
-  };
+  // If no photo exists, fetch from Geoapify (and fallback to Unsplash)
+  GetPlacePhoto(placeName, tripId);
+};
 
-  const GetPlacePhoto = async (placeName, tripId) => {
-    // Step 1: Get Place ID from Place Name
+const GetPlacePhoto = async (placeName, tripId) => {
+  try {
+    // Step 1: Autocomplete from Geoapify
     const autoResponse = await fetch(
-      `https://maps.gomaps.pro/maps/api/place/autocomplete/json?input=${encodeURIComponent(placeName)}&key=${import.meta.env.VITE_GOMAPS_PLACE_API_KEY}`
+      `https://api.geoapify.com/v1/geocode/autocomplete?text=${encodeURIComponent(
+        placeName
+      )}&apiKey=${import.meta.env.VITE_GEOAPIFY_API_KEY}`
     );
     const autoData = await autoResponse.json();
 
-    const placeId = autoData?.predictions?.[0]?.place_id;
-    if (!placeId) return;
+    const place = autoData?.features?.[0];
+    if (!place) return;
 
-    // Step 2: Get Photo Reference from Place Details
-    const detailsResponse = await fetch(
-      `https://maps.gomaps.pro/maps/api/place/details/json?place_id=${placeId}&key=${import.meta.env.VITE_GOMAPS_API_KEY}`
+    const displayName = place.properties.formatted;
+
+    // Step 2: Get a photo (Geoapify doesn't provide photos directly)
+    // → Fallback to Unsplash
+    const unsplashResponse = await fetch(
+      `https://api.unsplash.com/search/photos?query=${encodeURIComponent(
+        displayName
+      )}&client_id=${import.meta.env.VITE_UNSPLASH_API_KEY}`
     );
-    const detailsData = await detailsResponse.json();
-    // console.log(detailsData?.result?.photos)
+    const unsplashData = await unsplashResponse.json();
 
-    const photoReference = detailsData?.result?.photos?.[6]?.photo_reference;
-    // // console.log(`Photo reference: ${photoReference}`)
-    if (!photoReference) return;
+    const photoUrl = unsplashData?.results?.[0]?.urls?.regular;
+    if (!photoUrl) return;
 
-    // Step 3: Generate Photo URL
-    const photoUrl = `https://maps.gomaps.pro/maps/api/place/photo?maxwidth=1000&maxheight=1000&photoreference=${photoReference}&key=${import.meta.env.VITE_GOMAPS_API_KEY}`;
+    // Step 3: Save photo to Firestore
     await updateDoc(doc(db, 'AITrips', tripId), { tripPhotoURL: photoUrl });
     setPhotoUrl(photoUrl);
-    // console.log(photoUrl);
-  };
+  } catch (error) {
+    console.error("Error fetching photo:", error);
+  }
+};
+
 
   return (
     <div className='p-5 sm:p-10 md:px-20 lg:px-44 xl:px-56'>

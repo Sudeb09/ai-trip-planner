@@ -36,18 +36,38 @@ function CreateTrip() {
         setPlace(query);
     
         if (query.length > 2) {
-            try {
-                // Make a request to gomaps.pro API for autocomplete suggestions
-                const response = await axios.get(
-                    `https://maps.gomaps.pro/maps/api/place/autocomplete/json?input=${query}&key=${import.meta.env.VITE_GOMAPS_API_KEY}`
-                );
+            // try {
+            //     // Make a request to gomaps.pro API for autocomplete suggestions
+            //     const response = await axios.get(
+            //         // `https://maps.gomaps.pro/maps/api/place/autocomplete/json?input=${query}&key=${import.meta.env.VITE_GOMAPS_API_KEY}`
+            //         `https://api.geoapify.com/v1/geocode/autocomplete?text=${query}&apiKey=${import.meta.env.VITE_GOMAPS_PLACE_API_KEY}`
+            //     );
     
-                // Use 'predictions' field from the response
-                setSuggestions(response.data.predictions || []);
-                // console.log(response.data.predictions);  // Log the response to see the structure
+            //     // Use 'predictions' field from the response
+            //     setSuggestions(response.data.predictions || []);
+            //     console.log(response.data.predictions);  // Log the response to see the structure
+            // } catch (error) {
+            //     console.error('Error fetching place suggestions:', error);
+            // }
+            try {
+                const response = await axios.get(
+                    `https://api.geoapify.com/v1/geocode/autocomplete?text=${query}&apiKey=${import.meta.env.VITE_GEOAPIFY_API_KEY}`
+                );
+
+                // Geoapify returns "features" not "predictions"
+                const suggestions = response.data.features.map((feature) => ({
+                    place_id: feature.properties.place_id,
+                    description: feature.properties.formatted,  // similar to Google predictions description
+                    lat: feature.properties.lat,
+                    lon: feature.properties.lon,
+                }));
+
+                setSuggestions(suggestions);
+                console.log(suggestions);  // See formatted results
             } catch (error) {
-                console.error('Error fetching place suggestions:', error);
+                console.error("Error fetching place suggestions:", error);
             }
+
         } else {
             setSuggestions([]); // Clear suggestions if input is shorter than 3 characters
         }

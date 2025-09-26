@@ -9,7 +9,7 @@ function HotelCardItem({hotel, tripId, index}) {
 
   useEffect(() => {
     if (hotel?.name) {
-      fetchPhotoFromFirebase(hotel?.name, tripId);
+      // fetchPhotoFromFirebase(hotel?.name, tripId);
     }
   }, [hotel]);
 
@@ -36,7 +36,8 @@ function HotelCardItem({hotel, tripId, index}) {
   const GetPlacePhoto = async (hotelName, hotelIndex, placeRef) => {
     // Step 1: Get Place ID from Place Name
     const autoResponse = await fetch(
-      `https://maps.gomaps.pro/maps/api/place/autocomplete/json?input=${encodeURIComponent(hotelName)}&key=${import.meta.env.VITE_GOMAPS_PLACE_API_KEY}`
+      `https://api.geoapify.com/v1/geocode/autocomplete?text=${encodeURIComponent(hotelName)}&apiKey=${import.meta.env.VITE_GEOAPIFY_API_KEY}`
+      // `https://maps.gomaps.pro/maps/api/place/autocomplete/json?input=${encodeURIComponent(hotelName)}&key=${import.meta.env.VITE_GOMAPS_PLACE_API_KEY}`
     );
     const autoData = await autoResponse.json();
 
@@ -45,13 +46,14 @@ function HotelCardItem({hotel, tripId, index}) {
 
     // Step 2: Get Photo Reference from Place Details
     const detailsResponse = await fetch(
-      `https://maps.gomaps.pro/maps/api/place/details/json?place_id=${placeId}&key=${import.meta.env.VITE_GOMAPS_PLACE_API_KEY}`
+      // `https://maps.gomaps.pro/maps/api/place/details/json?place_id=${placeId}&key=${import.meta.env.VITE_GOMAPS_PLACE_API_KEY}`
+      `https://api.geoapify.com/v2/place-details?id=${placeId}&apiKey=${import.meta.env.VITE_GOMAPS_PLACE_API_KEY}`
     );
     const detailsData = await detailsResponse.json();
     // console.log(detailsData)
 
     const photoReference = detailsData?.result?.photos?.[7]?.photo_reference;
-    // // console.log(`Photo reference: ${photoReference}`)
+    console.log(`Photo reference: ${photoReference}`)
 
     // Step 3: Generate Photo URL
     const photoUrl = photoReference
